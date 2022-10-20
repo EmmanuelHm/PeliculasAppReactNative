@@ -1,14 +1,16 @@
 import React from 'react'
-import { ActivityIndicator, Text, View } from 'react-native';
-import { MoviePoster } from '../components/MoviePoster';
-import { useMovies } from '../hooks/useMovies';
+import { ActivityIndicator, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useMovies } from '../hooks/useMovies';
+import { ScrollView } from 'react-native-gesture-handler';
+import { HorizontalSlider } from '../components/HorizontalSlider';
+import { CarouselSlider } from '../components/CarouselSlider';
 
 export const HomeScreen = () => {
 
   const { top } = useSafeAreaInsets()
 
-  const { peliculasEnCine, isLoading } = useMovies()
+  const { nowPlaying, popular, topRated, upcoming, isLoading } = useMovies()
 
   if(isLoading){
     return (
@@ -19,10 +21,22 @@ export const HomeScreen = () => {
   }
 
   return (
-    <View style={{ marginTop: top + 20 }}>
-      
-      <MoviePoster movie={peliculasEnCine[10] } />
+    <ScrollView>
+      <View style={{ marginTop: top + 20 }}>
 
-    </View>
+        {/* Carousel Principal */}
+        <CarouselSlider movies={nowPlaying}/>
+
+        {/* Peliculas Populares */}
+        <HorizontalSlider title='Popular'  movies={popular}/>
+
+        {/* Peliculas Top Rated */}
+        <HorizontalSlider title='Top Rated'  movies={topRated}/>
+
+        {/* Peliculas Upcoming */}
+        <HorizontalSlider title='Upcoming'  movies={upcoming}/>
+
+      </View>
+    </ScrollView>
   )
 }

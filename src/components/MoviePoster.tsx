@@ -1,28 +1,38 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { text } from '../theme/AppTheme';
+import { View, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Movie } from '../interfaces/movieInterface';
 
 interface Props{
-    movie: Movie
+    movie: Movie,
+    height?: number,
+    width?: number,
 }
 
-export const MoviePoster = ({movie} :  Props) => {
+export const MoviePoster = ({movie, height = 420, width = 300} :  Props) => {
     
-    const { title, poster_path } = movie;
-    const uri = `https://image.tmdb.org/t/p/w500${poster_path}`
+    const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    const navigation = useNavigation();
 
   return (
-    <View style={{
-        width: 300,
-        height: 420,
-    }}>
+    <TouchableOpacity 
+        onPress={ () => navigation.navigate('DetailScreen', movie) }
+        activeOpacity={0.8}
+        style={{
+            width,
+            height,
+            marginHorizontal: 2,
+            paddingBottom: 20,
+            paddingHorizontal: 7
+        }}
+    >
         <View style={styles.imageContainer}>
             <Image
                 source={{uri}} 
                 style={styles.image} />
         </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
