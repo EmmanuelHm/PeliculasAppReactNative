@@ -10,16 +10,18 @@ interface Props {
     movies: Movie[]
 }
 
-export const CarouselSlider = ({ movies}: Props) => {
+export const CarouselSlider = ({ movies }: Props) => {
+
   return (
     <View style={{ height: 440 }}>
-          <Carousel
+          {/* <Carousel
             data={movies}
             renderItem={ ({ item }: any) => <MoviePoster movie={ item } /> }
             sliderWidth={windowWidth}
             itemWidth={300}
             inactiveSlideOpacity={0.9}
-          />
+            onSnapToItem={ index => getPosterColors(index) }
+          /> */}
     </View>
   )
 }
